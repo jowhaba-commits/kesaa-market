@@ -196,7 +196,7 @@ function resetForm() {
     if (productDescriptionInput) productDescriptionInput.value = '';
     imgPreview.style.display = 'none';
     formTitle.textContent = "إضافة منتج جديد";
-    submitBtn.textContent = "حفظ المنتج ✨";
+    submitBtn.textContent = "حفظ المنتج ";
     cancelEditBtn.style.display = 'none';
 }
 
