@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تم استلام طلبكِ بنجاح | متجر كساء</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        .thankyou-wrapper {
+            max-width: 600px;
+            margin: 60px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .success-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+        .order-details-box {
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: right;
+        }
+        .btn-home {
+            display: inline-block;
+            padding: 12px 28px;
+            background-color: var(--cherry-blossom-pink, #e89cae);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: background 0.3s ease;
+        }
+        .btn-home:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="thankyou-wrapper">
+            <div class="success-icon">🎉</div>
+            <h1 style="color: #2d3748; margin-bottom: 10px;">شكراً لطلبكِ من متجر كساء!</h1>
+            <p style="color: #718096; line-height: 1.6;">تم استلام طلبكِ بنجاح، وستقوم إدارة المتجر بالمراجعة والتواصل معكِ قريباً لتأكيد تفاصيل الشحن.</p>
+
+            <div class="order-details-box" id="order-summary-content">
+                <p style="text-align: center; color: #a0aec0;">جاري تحميل تفاصيل الطلب...</p>
+            </div>
+
+            <a href="/" class="btn-home">العودة للرئيسية 🛍️</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const lastOrder = JSON.parse(localStorage.getItem('kesaa_last_order'));
+            const container = document.getElementById('order-summary-content');
+
+            if (!lastOrder) {
+                container.innerHTML = '<p style="text-align:center;">لا توجد تفاصيل طلب حديثة معروضة.</p>';
+                return;
+            }
+
+            let itemsList = lastOrder.items.map(item => `
+                <li style="display:flex; justify-content:space-between; margin-bottom: 8px; font-size:14px;">
+                    <span>${item.name} (${item.size}) × ${item.quantity}</span>
+                    <b>${item.price * item.quantity} ج.م</b>
+                </li>
+            `).join('');
+
+            container.innerHTML = `
+                <h3 style="margin-top:0; border-bottom: 1px solid #e2e8f0; padding-bottom:8px; color: #4a5568;">طلب رقم: <span style="color:#319795;">#${lastOrder.orderId}</span></h3>
+                <p style="margin: 5px 0; font-size: 14px;"><b>الاسم:</b> ${lastOrder.name}</p>
+                <p style="margin: 5px 0 15px 0; font-size: 14px;"><b>المحافظة:</b> ${lastOrder.governorate}</p>
+                <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 10px 0;">
+                <ul style="list-style: none; padding: 0; margin: 10px 0;">
+                    ${itemsList}
+                </ul>
+                <hr style="border: 0; border-top: 1px dashed #e2e8f0; margin: 10px 0;">
+                <div style="display:flex; justify-content:space-between; font-size: 14px; color: #4a5568;">
+                    <span>مصاريف الشحن:</span>
+                    <b>${lastOrder.shippingFee} ج.م</b>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size: 16px; font-weight:700; margin-top:8px; color: #2d3748;">
+                    <span>الإجمالي الكلي:</span>
+                    <span style="color: var(--cherry-blossom-pink, #e89cae);">${lastOrder.totalAmount} ج.م</span>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
