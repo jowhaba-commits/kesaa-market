@@ -1,7 +1,6 @@
 // ===================================================
-// 0. أسعار الشحن حسب المحافظات (عدل الأسعار هنا براحتك لما خالتك تبعتهم)
+// 0. أسعار الشحن حسب المحافظات
 // ===================================================
-// أسعار الشحن حسب المناطق الجديدة
 const SHIPPING_RATES = {
     // المنطقة الأولى (75 ج.م)
     "القاهرة": 75,
@@ -38,8 +37,8 @@ const SHIPPING_RATES = {
     "جنوب سيناء": 160
 };
 
-let currentShippingFee = 0; // قيمة الشحن الحالية بناءً على اختيار العميلة
-let allProducts = [];       // تخزين كامل المنتجات لتشغيل البحث السريع
+let currentShippingFee = 0;
+let allProducts = [];
 
 // ===================================================
 // 1. الإعدادات الأساسية والاتصال بـ Supabase
@@ -48,10 +47,8 @@ const SUPABASE_URL = "https://sdjvnkrmfelgtypogttx.supabase.co";
 const SUPABASE_KEY = "sb_publishable_Ox-6-5PCOYhIPRG3DZ0CuQ_1q05COmH"; 
 const SupabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// مصفوفة لتخزين عناصر السلة (يتم استرجاعها تلقائياً من الـ localStorage عند الفتح)
 let cart = JSON.parse(localStorage.getItem('kesaa_cart')) || [];
 
-// السيلكتورز الأساسية
 const cartItemsContainer = document.getElementById('cart-items');
 const cartCountElement = document.getElementById('cart-count');
 const cartTotalElement = document.getElementById('cart-total');
@@ -60,50 +57,43 @@ const clearCartBtn = document.getElementById('clear-cart-btn');
 const governorateSelect = document.getElementById('governorate');
 const searchInput = document.getElementById('search-input');
 
-// دالة حماية لحفظ بيانات السلة باستمرار
 function saveCart() {
     localStorage.setItem('kesaa_cart', JSON.stringify(cart));
 }
 
 // ===================================================
-// 2. تحميل البيانات عند فتح الصفحة فوراً والبحث الحي
+// 2. تحميل البيانات والبحث والـ Dark Mode والـ Navigation
 // ===================================================
 document.addEventListener('DOMContentLoaded', async () => {
-    // تحديث الواجهة فوراً بالمنتجات المخزنة مسبقاً في السلة
     updateCartUI();
 
     // تهيئة مكتبة AOS
     if (typeof AOS !== 'undefined') {
-        AOS.init({
-            duration: 800,
-            once: true     
-        });
+        AOS.init({ duration: 800, once: true });
     }
 
+    // جلب المنتجات
     const productsGrid = document.querySelector('.products-grid');
-    if (!productsGrid) return;
+    if (productsGrid) {
+        productsGrid.innerHTML = '<h3 style="grid-column: 1/-1; text-align: center; padding: 40px;">جاري تحميل أحدث العبايات و الطرح ... </h3>';
 
-    // إشعار التحميل للمستخدم لحين جلب البيانات
-    productsGrid.innerHTML = '<h3 style="grid-column: 1/-1; text-align: center; padding: 40px;">جاري تحميل أحدث العبايات و الطرح  ... </h3>';
+        try {
+            const { data: storedProducts, error } = await SupabaseClient
+                .from('products')
+                .select('*')
+                .order('created_at', { ascending: false });
 
-    try {
-        // جلب المنتجات من سوبابيز مرتبة من الأحدث للأقدم
-        const { data: storedProducts, error } = await SupabaseClient
-            .from('products')
-            .select('*')
-            .order('created_at', { ascending: false });
+            if (error) throw error;
+            allProducts = storedProducts || [];
+            renderProductsCards(allProducts);
 
-        if (error) throw error;
-        
-        allProducts = storedProducts || [];
-        renderProductsCards(allProducts);
-
-    } catch (error) {
-        console.error("خطأ في جلب البيانات: ", error);
-        productsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #ff4d4d;">حدث خطأ أثناء الاتصال بالسيرفر، يرجى المحاولة لاحقاً.</p>';
+        } catch (error) {
+            console.error("خطأ في جلب البيانات: ", error);
+            productsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #ff4d4d;">حدث خطأ أثناء الاتصال بالسيرفر، يرجى المحاولة لاحقاً.</p>';
+        }
     }
 
-    // تفعيل البحث الحي للمنتجات
+    // البحث الحي
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             const query = e.target.value.toLowerCase().trim();
@@ -116,7 +106,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    // الاستماع لتغيير المحافظة لتعديل الشحن
+    // اختيار المحافظة
     if (governorateSelect) {
         governorateSelect.addEventListener('change', (e) => {
             const selectedGov = e.target.value;
@@ -124,14 +114,81 @@ document.addEventListener('DOMContentLoaded', async () => {
             updateCartUI();
         });
     }
+
+    // ===================================================
+    // إعداد المنيو والأيقونات (Font Awesome)
+    // ===================================================
+    const menuToggle = document.getElementById('menu-toggle');
+    const navMenu = document.getElementById('nav-menu');
+    const menuIcon = document.getElementById('menu-icon');
+
+    if (menuToggle && navMenu) {
+        menuToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navMenu.classList.toggle('active');
+            
+            if (menuIcon) {
+                if (navMenu.classList.contains('active')) {
+                    menuIcon.className = 'fa-solid fa-xmark';
+                } else {
+                    menuIcon.className = 'fa-solid fa-bars';
+                }
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+                navMenu.classList.remove('active');
+                if (menuIcon) menuIcon.className = 'fa-solid fa-bars';
+            }
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                if (menuIcon) menuIcon.className = 'fa-solid fa-bars';
+            });
+        });
+    }
+
+    // ===================================================
+    // إعداد الـ Dark Mode (Font Awesome Icons)
+    // ===================================================
+    const darkModeToggle = document.getElementById('dark-mode-toggle');
+    const modeIcon = document.getElementById('mode-icon');
+
+    const setModeUI = (isDark) => {
+        if (isDark) {
+            document.body.classList.add('dark-mode');
+            if (modeIcon) modeIcon.className = 'fa-solid fa-sun';
+        } else {
+            document.body.classList.remove('dark-mode');
+            if (modeIcon) modeIcon.className = 'fa-solid fa-moon';
+        }
+    };
+
+    // المزامنة عند الفتح
+    if (localStorage.getItem('theme') === 'dark') {
+        setModeUI(true);
+    }
+
+    if (darkModeToggle) {
+        darkModeToggle.addEventListener('click', () => {
+            const isDark = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            setModeUI(isDark);
+        });
+    }
 });
 
-// دالة رندر كروت المنتجات
+// ===================================================
+// 3. عرض الكروت وإدارة السلة
+// ===================================================
 function renderProductsCards(productsList) {
     const productsGrid = document.querySelector('.products-grid');
     if (!productsGrid) return;
 
-    productsGrid.innerHTML = ''; // تنظيف الحاوية
+    productsGrid.innerHTML = '';
 
     if (productsList.length === 0) {
         productsGrid.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">لا توجد منتجات مطابقة للبحث.</p>';
@@ -141,7 +198,6 @@ function renderProductsCards(productsList) {
     productsList.forEach((product, index) => {
         const card = document.createElement('div');
         card.className = 'product-card';
-        
         card.setAttribute('data-aos', 'zoom-in');
         card.setAttribute('data-aos-delay', (index % 3) * 100);
 
@@ -157,7 +213,6 @@ function renderProductsCards(productsList) {
                 ${productDescription ? `<p class="product-desc" style="font-size: 14px; color: #666; margin: 8px 0; line-height: 1.4;">${productDescription}</p>` : ''}
                 <p class="price">${product.price} ج.م</p>
                 
-                <!-- قائمة اختيار المقاس (Size 1 & Size 2) -->
                 <div class="size-selector-container" style="margin: 10px 0; display: flex; align-items: center; justify-content: center; gap: 8px;">
                     <label for="size-${product.id}" style="font-size: 13px; font-weight: 600;">المقاس:</label>
                     <select id="size-${product.id}" class="product-size-select" style="padding: 5px 10px; border-radius: 6px; border: 1px solid #cbd5e1; font-family: 'Cairo', sans-serif; font-size: 13px; cursor: pointer;">
@@ -182,9 +237,6 @@ function renderProductsCards(productsList) {
     setupCartButtons();
 }
 
-// ===================================================
-// 3. إدارة عمليات وسلوك سلة المشتريات (Cart Control)
-// ===================================================
 function setupCartButtons() {
     const addToCartButtons = document.querySelectorAll('.add-to-cart-btn:not([disabled])');
     addToCartButtons.forEach(button => {
@@ -208,20 +260,17 @@ function setupCartButtons() {
 
 function addItemToCart(id, name, price, size) {
     const existingItem = cart.find(item => item.id === id && item.size === size);
-    
     if (existingItem) {
         existingItem.quantity += 1;
     } else {
         cart.push({ id, name, price, size, quantity: 1 });
     }
-    
     saveCart();
     updateCartUI();
 }
 
 function removeOneItem(id, size) {
     const itemIndex = cart.findIndex(item => item.id === id && item.size === size);
-    
     if (itemIndex !== -1) {
         if (cart[itemIndex].quantity > 1) {
             cart[itemIndex].quantity -= 1;
@@ -260,11 +309,7 @@ function updateCartUI() {
         itemsTotalPrice += (item.price * item.quantity);
 
         const li = document.createElement('li');
-        li.style.display = 'flex';
-        li.style.justifyContent = 'space-between';
-        li.style.alignItems = 'center';
-        li.style.padding = '12px 0';
-        li.style.borderBottom = '1px dotted #e2e8f0';
+        li.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px dotted #e2e8f0;';
 
         li.innerHTML = `
             <div>
@@ -274,13 +319,12 @@ function updateCartUI() {
             </div>
             <div style="display: flex; align-items: center; gap: 15px;">
                 <span style="font-weight: 700; color: var(--soft-blue);">${item.price * item.quantity} ج.م</span>
-                <button class="delete-item-btn" data-id="${item.id}" data-size="${item.size}" style="background: #fff5f5; border: 1px solid #ffe3e3; color: #ff4d4d; padding: 3px 8px; border-radius: 5px; cursor: pointer; font-size: 12px;">إلغاء ❌</button>
+                <button class="delete-item-btn" data-id="${item.id}" data-size="${item.size}" style="background: #fff5f5; border: 1px solid #ffe3e3; color: #ff4d4d; padding: 3px 8px; border-radius: 5px; cursor: pointer; font-size: 12px;"><i class="fa-solid fa-trash"></i></button>
             </div>
         `;
         cartItemsContainer.appendChild(li);
     });
 
-    //  مصاريف الشحن في السلة
     const shippingLi = document.createElement('li');
     shippingLi.style.cssText = 'display: flex; justify-content: space-between; align-items: center; padding: 10px 0; font-size: 14px; color: #64748b; border-bottom: 2px solid #e2e8f0;';
     shippingLi.innerHTML = `
@@ -289,7 +333,6 @@ function updateCartUI() {
     `;
     cartItemsContainer.appendChild(shippingLi);
 
-    // المجموع الكلي النهائي
     const finalTotal = itemsTotalPrice + currentShippingFee;
 
     if (cartCountElement) cartCountElement.textContent = totalCount;
@@ -306,7 +349,7 @@ function updateCartUI() {
 }
 
 // ===================================================
-// 4. إرسال الطلب تلقائياً عبر Telegram Bot ✈️ وخصم المخزون
+// 4. إرسال الطلب تلقائياً عبر Telegram Bot ✈️
 // ===================================================
 if (checkoutForm) {
     checkoutForm.addEventListener('submit', async (e) => {
@@ -332,7 +375,6 @@ if (checkoutForm) {
         const phone = document.getElementById('phone').value;
         const address = document.getElementById('address').value;
 
-        // حساب إجمالي المنتجات والشحن للتفصيل في رسالة تليجرام
         let itemsTotalPrice = 0;
         let productsText = '';
         cart.forEach((item, index) => {
@@ -344,7 +386,6 @@ if (checkoutForm) {
         const finalGrandTotal = itemsTotalPrice + currentShippingFee;
         const orderId = Math.floor(100000 + Math.random() * 900000);
 
-        //         
         const message = ` <b>طلب جديد (#${orderId}) من متجر كِساء</b> \n\n` +
                         `👤 <b>بيانات العميلة:</b>\n` +
                         `• <b>الاسم:</b> ${name}\n` +
@@ -358,16 +399,14 @@ if (checkoutForm) {
                         `⏰ <b>تاريخ الطلب:</b> ${new Date().toLocaleString('ar-EG')}`;
 
         const TELEGRAM_BOT_TOKEN = "8858857398:AAEIfYPqKwAL20VOBR6bcG8W5c8U6SNBLdQ"; 
-        const TELEGRAM_CHAT_ID = "5782928074";   
+        const TELEGRAM_CHAT_ID = "5782928074"; 
 
         const telegramURL = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
 
         try {
             const response = await fetch(telegramURL, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     chat_id: TELEGRAM_CHAT_ID,
                     text: message,
@@ -378,7 +417,6 @@ if (checkoutForm) {
             const result = await response.json();
 
             if (result.ok) {
-                // 1️⃣ حفظ بيانات الطلب الأخير لصفحة شكراً
                 localStorage.setItem('kesaa_last_order', JSON.stringify({
                     orderId,
                     name,
@@ -388,7 +426,6 @@ if (checkoutForm) {
                     totalAmount: finalGrandTotal
                 }));
 
-                // 2️⃣ خصم الكميات من داتابيز Supabase
                 for (const item of cart) {
                     try {
                         const { data: prod } = await SupabaseClient
@@ -409,7 +446,6 @@ if (checkoutForm) {
                     }
                 }
 
-                // 3️⃣ تفريغ السلة والتحويل لصفحة شكراً
                 cart = [];
                 saveCart();
                 window.location.href = '/thank-you.html';
@@ -427,27 +463,21 @@ if (checkoutForm) {
     });
 }
 
-// ===================================================
-// 5. تشغيل لوجيك الـ Dark Mode وتأثير دوران الأيقونة
-// ===================================================
-const darkModeToggle = document.getElementById('dark-mode-toggle');
-const modeIcon = document.getElementById('mode-icon');
+// تحديد زرار التسجيل
+const googleBtn = document.getElementById('google-login-btn');
 
-if (localStorage.getItem('theme') === 'dark') {
-    document.body.classList.add('dark-mode');
-    if (modeIcon) modeIcon.style.transform = 'rotate(360deg)';
+// دالة التسجيل بـ Google
+async function signInWithGoogle() {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+  });
+
+  if (error) {
+    console.error('حدث خطأ أثناء التسجيل:', error.message);
+  }
 }
 
-if (darkModeToggle) {
-    darkModeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        
-        if (document.body.classList.contains('dark-mode')) {
-            localStorage.setItem('theme', 'dark');
-            if (modeIcon) modeIcon.style.transform = 'rotate(360deg)';
-        } else {
-            localStorage.setItem('theme', 'light');
-            if (modeIcon) modeIcon.style.transform = 'rotate(0deg)';
-        }
-    });
+// ربط الضغط على الزرار بالدالة
+if (googleBtn) {
+  googleBtn.addEventListener('click', signInWithGoogle);
 }
