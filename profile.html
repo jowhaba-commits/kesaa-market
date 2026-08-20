@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملف الشخصي - كساء</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Cairo', sans-serif; background: #f8fafc; padding: 20px; display: flex; justify-content: center; }
+        .profile-card { background: #fff; padding: 30px; border-radius: 16px; width: 100%; max-width: 400px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .profile-card img { width: 90px; height: 90px; border-radius: 50%; margin-bottom: 15px; border: 3px solid #7097b7; }
+        .profile-card h3 { margin: 10px 0 5px; color: #2c3e50; }
+        .profile-card p { color: #718096; font-size: 14px; margin-bottom: 20px; }
+        .back-btn { display: inline-block; padding: 10px 20px; background: #7097b7; color: #fff; text-decoration: none; border-radius: 8px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="profile-card">
+        <img id="p-avatar" src="https://via.placeholder.com/90" alt="صورة الشخص">
+        <h3 id="p-name">جاري التحميل...</h3>
+        <p id="p-email">...</p>
+        <a href="index.html" class="back-btn">العودة للرئيسية</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="/script/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const client = typeof SupabaseClient !== 'undefined' ? SupabaseClient : (window.SupabaseClient || window.supabase);
+                const { data: { session } } = await client.auth.getSession();
+
+                if (!session) {
+                    window.location.href = 'login.html'; // إعادة التوجيه للوجن لو مش مسجل
+                    return;
+                }
+
+                const user = session.user;
+                document.getElementById('p-avatar').src = user.user_metadata?.avatar_url || 'https://via.placeholder.com/90';
+                document.getElementById('p-name').textContent = user.user_metadata?.full_name || 'مستخدم كساء';
+                document.getElementById('p-email').textContent = user.email;
+            } catch (err) {
+                console.error(err);
+            }
+        });
+    </script>
+</body>
+</html>

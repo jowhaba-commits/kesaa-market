@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سياسة الاسترجاع والاستبدال | كساء</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary-color: #0f172a;
+            --accent-color: #2563eb;
+            --border-color: #e2e8f0;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+        }
+
+        /* قراءة نظام الجهاز أو إضافة الكلاس */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #0f172a;
+                --card-bg: #1e293b;
+                --text-main: #f8fafc;
+                --text-muted: #94a3b8;
+                --primary-color: #38bdf8;
+                --accent-color: #60a5fa;
+                --border-color: #334155;
+                --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        body.dark, body.dark-mode {
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary-color: #38bdf8;
+            --accent-color: #60a5fa;
+            --border-color: #334155;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 680px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .policy-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 30px;
+        }
+
+        .policy-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-main);
+        }
+
+        /* مؤشر الكتابة الحية */
+        .typing-cursor {
+            border-left: 2px solid var(--accent-color);
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .bullet-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .footer-note {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px dashed var(--border-color);
+            font-weight: 700;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .back-btn {
+            display: block;
+            width: fit-content;
+            margin: 25px auto 0;
+            padding: 10px 24px;
+            background-color: var(--border-color);
+            color: var(--text-main);
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            background-color: var(--accent-color);
+            color: #ffffff;
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 25px 18px; }
+            .header h1 { font-size: 1.4rem; }
+            .policy-item { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>سياسة الاسترجاع والاستبدال 🤍</h1>
+        </div>
+        <ul class="policy-list">
+            <li class="policy-item"><span class="bullet-icon">🔹</span><span class="typewriter-text" data-text="حرصًا على راحتك، بنوفر لكِ إمكانية معاينة الأوردر عند الاستلام قبل الدفع."></span></li>
+            <li class="policy-item"><span class="bullet-icon">🔹</span><span class="typewriter-text" data-text="لو المنتج مناسبك، تستلمي الأوردر وتدفعي قيمته بالكامل."></span></li>
+            <li class="policy-item"><span class="bullet-icon">🔹</span><span class="typewriter-text" data-text="لو المنتج مش مناسبك أو مش عجبك، تقدري ترفضي الاستلام، وفي الحالة دي بتدفعي قيمة الشحن فقط."></span></li>
+            <li class="policy-item"><span class="bullet-icon">⚠️</span><span class="typewriter-text" data-text="بمجرد استلام الأوردر ودفع قيمته، لا يمكن إرجاع المنتج."></span></li>
+            <li class="policy-item"><span class="bullet-icon">🔹</span><span class="typewriter-text" data-text="برجاء التأكد من المقاس واللون والتفاصيل أثناء المعاينة قبل الاستلام."></span></li>
+        </ul>
+        <div class="footer-note" id="footerNote">هدفنا إنك تستلمي المنتج وإنتِ مطمنة وراضية عنه 🤍</div>
+        <a href="index.html" class="back-btn">← العودة للمتجر</a>
+    </div>
+
+    <script>
+        // 1. ميز المظهر الليلي أوتوماتيكياً
+        if (localStorage.getItem('theme') === 'dark' || localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark');
+        }
+
+        // 2. تأثير الكتابة الحية الحقيقي (Typewriter)
+        document.addEventListener("DOMContentLoaded", () => {
+            const elements = document.querySelectorAll('.typewriter-text');
+            let currentElementIndex = 0;
+
+            function typeNextElement() {
+                if (currentElementIndex >= elements.length) {
+                    // ظهور الجملة الأخيرة بعد انتهاء الكتابة
+                    document.getElementById('footerNote').style.opacity = '1';
+                    return;
+                }
+
+                const element = elements[currentElementIndex];
+                const textToType = element.getAttribute('data-text');
+                element.classList.add('typing-cursor');
+                let charIndex = 0;
+
+                const interval = setInterval(() => {
+                    if (charIndex < textToType.length) {
+                        element.textContent += textToType.charAt(charIndex);
+                        charIndex++;
+                    } else {
+                        clearInterval(interval);
+                        element.classList.remove('typing-cursor');
+                        currentElementIndex++;
+                        setTimeout(typeNextElement, 300); // وقت التأخير بين كل سطر والتاني
+                    }
+                }, 20); // سرعة كتابة الحروف
+            }
+
+            typeNextElement();
+        });
+    </script>
+</body>
+</html>
