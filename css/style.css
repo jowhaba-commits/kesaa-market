@@ -7,9 +7,11 @@
     box-sizing: border-box;
     font-family: 'Cairo', sans-serif;
     scroll-behavior: smooth;
-   user-select: none;
-   -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
+
+
 
 :root {
     --main-blue: #4a7c59; 
@@ -18,6 +20,11 @@
     --dark-text: #2c3e50;
     --gold-accent: #d4af37; 
     --cherry-blossom-pink: #f2aebc; 
+}
+
+.Iicon{
+    height: 20px;
+    width: 20px;
 }
 
 body {
@@ -31,6 +38,7 @@ body {
     max-width: 1200px;
     margin: 0 auto;
 }
+
 
 /* ===================================================
    2. الهيدر، اللوجو، والتنقل (Navbar)
@@ -71,6 +79,52 @@ header {
 
 .logo-img:hover {
     transform: scale(1.05);
+}
+
+/* 👤 تنسيق زر تسجيل الدخول الأساسي */
+#auth-login-link.nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 20px;
+    background-color: var(--cherry-blossom-pink, #f472b6);
+    color: #ffffff !important;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 25px;
+    text-decoration: none !important;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(244, 114, 182, 0.25);
+    border: none;
+}
+
+/* عند مرور الماوس عادي */
+#auth-login-link.nav-btn:hover {
+    background-color: #e85d9e;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(244, 114, 182, 0.35);
+}
+
+/* 🌙 في المود الليلي (Dark Mode) */
+body.dark-mode #auth-login-link.nav-btn {
+    background-color: #FF8FA3;
+    color: #0f172a !important;
+}
+
+/* 🌟 عند مرور الماوس في الدارك مود (بدون تغيير للون أحمر) */
+body.dark-mode #auth-login-link.nav-btn:hover {
+    background-color: #FF8FA3;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(244, 114, 182, 0.6);
+}
+
+/* 💡 تأثير النيون المتوهج لحظة الضغط (Active) باللون البينك */
+body.dark-mode #auth-login-link.nav-btn:active {
+    background-color: #f472b6 !important;
+    transform: translateY(0) scale(0.97);
+    box-shadow: 0 0 10px #f472b6,
+                0 0 25px #f472b6,
+                0 1 45px #f472b6 !important; /* وهج نيون قوي بنفس اللون البينك */
 }
 
 nav a {
@@ -585,4 +639,138 @@ body.dark-mode .form-group select:focus {
 body.dark-mode footer {
     background-color: #0b0f17;
     border-top: 1px solid #1f293d;
+}
+
+/* أدوات الهيدر */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.menu-btn {
+    display: none;
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: inherit;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 1002;
+}
+
+/* responsive للموبايل */
+@media (max-width: 768px) {
+    .menu-btn {
+        display: block !important;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background-color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 90px 25px 30px;
+        gap: 20px;
+        box-shadow: -5px 0 20px rgba(0, 0, 0, 0.15);
+        transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        z-index: 1001;
+    }
+
+    .nav-links.active {
+        right: 0 !important;
+    }
+
+    .nav-links a {
+        font-size: 16px;
+        width: 100%;
+        padding: 10px 0;
+        border-bottom: 1px solid #f1f5f9;
+        color: #1e293b;
+        text-decoration: none;
+    }
+
+    body.dark-mode .nav-links {
+        background-color: #0f172a;
+    }
+    body.dark-mode .nav-links a {
+        border-bottom-color: #1e293b;
+        color: #f8fafc;
+    }
+}
+
+/* ===================================================
+   تنسيق أيقونات Font Awesome والعدّاد
+   =================================================== */
+
+/* محاذاة الأيقونات داخل الأزرار والروابط */
+.header-actions button,
+.header-actions a,
+.login-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
+}
+
+/* حجم ولون الأيقونات */
+.header-actions i,
+.nav-links i {
+    font-size: 1.2rem;
+    vertical-align: middle;
+    transition: transform 0.2s ease, color 0.3s ease;
+}
+
+/* تأثير اللمسة (Hover) على الأيقونات */
+.header-actions button:hover i,
+.cart-icon-btn:hover i {
+    transform: scale(1.1);
+}
+
+/* تنسيق شارة عداد السلة على الأيقونة */
+.cart-icon-btn {
+    position: relative;
+    padding: 5px;
+    color: #db7a8e;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    left: -8px;
+    background-color: #ff4d4d;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* أيقونة الحذف داخل السلة */
+.delete-item-btn i {
+    pointer-events: none;
+}
+
+/* 1️⃣ إخفاء زرار المنيو كوضع افتراضي للشاشات الكبيرة */
+#menu-toggle, 
+.menu-btn {
+    display: none !important;
+}
+
+/* 2️⃣ إظهار زرار المنيو للشاشات الصغيرة فقط (الموبايل والتابلت) */
+@media (max-width: 768px) {
+    #menu-toggle, 
+    .menu-btn {
+        display: flex !important;
+    }
 }
