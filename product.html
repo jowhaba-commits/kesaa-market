@@ -13,36 +13,44 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
     <style>
+        /* --- الحاوية الرئيسية --- */
         .product-details-container { 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
             gap: 40px; 
-            padding: 50px 0; 
-            align-items: flex-start;
+            padding: 40px 0; 
+            align-items: start;
         }
 
-        /* --- تصميم سلايدر الصور --- */
+        /* --- تصميم معرض الصور والسلايدر --- */
         .image-gallery-container {
             display: flex;
             flex-direction: column;
             gap: 15px;
-            position: relative;
+            width: 100%;
         }
 
         .main-image-wrapper {
             position: relative;
             width: 100%;
-            height: 480px;
-            border-radius: 15px;
+            max-width: 450px;
+            aspect-ratio: 3 / 4;
+            margin: 0 auto;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .details-img { 
             width: 100%; 
             height: 100%; 
-            object-fit: cover; 
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            object-fit: contain;
+            image-rendering: -webkit-optimize-contrast;
+            transition: opacity 0.25s ease-in-out;
         }
 
         /* أسهم السلايدر */
@@ -50,77 +58,97 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.9);
             color: #1e293b;
             border: none;
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
             font-size: 18px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             transition: all 0.2s ease;
             z-index: 5;
         }
 
         .slider-arrow:hover {
             background: #ffffff;
-            transform: translateY(-50%) scale(1.1);
+            transform: translateY(-50%) scale(1.08);
         }
 
         .slider-arrow.prev { right: 12px; }
         .slider-arrow.next { left: 12px; }
 
-        /* معرض الصور المصغرة Thumbnails */
-        .thumbnails-container {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            padding-bottom: 5px;
-        }
+        /* المعرض المصغر Thumbnails */
+    /* 🖼️ تحسين أشكال الصور المصغرة (Thumbnails) */
+.thumbnails-container {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 8px 2px;
+    justify-content: center;
+}
 
-        .thumbnail-img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 8px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            opacity: 0.6;
-            transition: all 0.2s ease;
-        }
+.thumbnail-img {
+    width: 65px !important;
+    height: 65px !important;
+    object-fit: cover !important; /* تغطية الإطار بالكامل بدون فراغات */
+    object-position: top center !important; /* التركيز على الجزء العلوي من الصورة */
+    border-radius: 10px !important;
+    cursor: pointer;
+    border: 2px solid transparent !important; /* إخفاء البوردر العادي لخلفية أنظف */
+    opacity: 0.5;
+    transition: all 0.25s ease;
+    flex-shrink: 0;
+    background-color: transparent !important;
+}
 
-        .thumbnail-img.active,
-        .thumbnail-img:hover {
-            opacity: 1;
-            border-color: var(--cherry-blossom-pink, #f472b6);
-        }
+/* حالة التحويم والصورة النشطة */
+.thumbnail-img:hover {
+    opacity: 0.85;
+}
 
+.thumbnail-img.active {
+    opacity: 1 !important;
+    border-color: #f472b6 !important; /* لون البينك المحدد */
+    box-shadow: 0 0 10px rgba(244, 114, 182, 0.4) !important; /* توهج خفيف للنشط */
+    transform: scale(1.05); /* تكبير خفيف للتوضيح */
+}
+
+/* 🌙 للـ Dark Mode تحديداً */
+body.dark-mode .thumbnail-img {
+    border-color: rgba(255, 255, 255, 0.1) !important; /* بوردر شفاف وخفيف جداً غير النشط */
+}
+
+body.dark-mode .thumbnail-img.active {
+    border-color: #f472b6 !important;
+}
+        /* --- تفاصيل المنتج --- */
         .details-info { 
             display: flex; 
             flex-direction: column; 
             gap: 20px; 
         }
+
         .product-description-text {
-            color: #555;
+            color: #475569;
             line-height: 1.8;
-            font-size: 16px;
+            font-size: 15px;
             white-space: pre-line;
         }
 
         /* اختيار المقاسات */
         .size-selection-box {
-            background: rgba(248, 250, 252, 0.8);
+            background: #f8fafc;
             border: 1px solid #e2e8f0;
             border-radius: 12px;
-            padding: 18px;
+            padding: 16px;
             display: flex;
             flex-direction: column;
             gap: 12px;
-            backdrop-filter: blur(8px);
         }
 
         .size-box-title {
@@ -132,7 +160,7 @@
         .size-options {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
+            gap: 10px;
         }
 
         .size-btn-label {
@@ -145,7 +173,7 @@
             border-radius: 10px;
             cursor: pointer;
             background: #ffffff;
-            transition: all 0.3s ease;
+            transition: all 0.25s ease;
             position: relative;
         }
 
@@ -155,38 +183,169 @@
             cursor: pointer;
         }
 
-        .size-name { font-size: 16px; font-weight: 700; color: #1e293b; }
+        .size-name { font-size: 15px; font-weight: 700; color: #1e293b; }
         .size-weight { font-size: 12px; color: #64748b; margin-top: 4px; font-weight: 600; }
 
         .size-btn-label:has(input[type="radio"]:checked) {
             border-color: var(--cherry-blossom-pink, #f472b6);
             background: rgba(244, 114, 182, 0.08);
-            box-shadow: 0 4px 12px rgba(244, 114, 182, 0.2);
-            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(244, 114, 182, 0.15);
         }
 
-        /* 🌙 Dark Mode */
-        body.dark-mode .size-selection-box {
-            background: rgba(30, 41, 59, 0.7) !important;
-            border-color: #334155 !important;
+        /* شارة الثقة ومعاينة الاستلام */
+        .product-trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: rgba(37, 99, 235, 0.05);
+            border: 1px dashed rgba(37, 99, 235, 0.3);
+            border-radius: 10px;
+            font-size: 13px;
+            color: #334155;
+            width: fit-content;
         }
-        body.dark-mode .size-box-title { color: #f1f5f9 !important; }
-        body.dark-mode .size-btn-label { background: #0f172a !important; border-color: #334155 !important; }
-        body.dark-mode .size-name { color: #f8fafc !important; }
-        body.dark-mode .size-weight { color: #94a3b8 !important; }
-        body.dark-mode .product-description-text { color: #cbd5e1 !important; }
-        body.dark-mode .slider-arrow { background: rgba(30, 41, 59, 0.85); color: #fff; }
 
+        .trust-link {
+            color: var(--accent-color, #2563eb);
+            font-weight: 700;
+            text-decoration: underline;
+        }
+
+        .add-to-cart-main-btn {
+            width: 100%;
+            max-width: 320px;
+            padding: 14px 28px;
+            font-size: 16px;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .add-to-cart-main-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* --- قسم المنتجات الأخرى --- */
         .related-products-section {
-            margin-top: 60px;
-            padding-top: 40px;
+            margin-top: 50px;
+            padding-top: 30px;
             border-top: 2px dashed #e2e8f0;
         }
 
-        @media (max-width: 768px) { 
-            .product-details-container { grid-template-columns: 1fr; gap: 25px; } 
-            .main-image-wrapper { height: 350px; } 
-        }
+        /* 🌙 Dark Mode */
+        body.dark-mode .main-image-wrapper,
+        body.dark-mode .thumbnail-img { background-color: #1e293b; }
+        body.dark-mode .size-selection-box { background: #1e293b; border-color: #334155; }
+        body.dark-mode .size-box-title { color: #f1f5f9; }
+        body.dark-mode .size-btn-label { background: #0f172a; border-color: #334155; }
+        body.dark-mode .size-name { color: #f8fafc; }
+        body.dark-mode .size-weight { color: #94a3b8; }
+        body.dark-mode .product-description-text { color: #cbd5e1; }
+        body.dark-mode .slider-arrow { background: rgba(30, 41, 59, 0.9); color: #fff; }
+        body.dark-mode .product-trust-badge { background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.3); color: #f1f5f9; }
+        body.dark-mode .trust-link { color: #38bdf8; }
+
+        /* 🛠️ إصلاح شامل لتصميم الموبايل */
+@media (max-width: 768px) {
+    /* ضبط الحاوية الرئيسية للموقع لمنع الضغط */
+    body, .container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+        margin: 0 auto !important;
+        box-sizing: border-box !important;
+    }
+
+    /* تحويل الشبكة لعمود واحد واخد العرض كامل */
+    .product-details-container {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 20px !important;
+        padding: 10px 0 !important;
+    }
+
+    /* ضبط حاوية معرض الصور */
+    .image-gallery-container {
+        width: 100% !important;
+    }
+
+ 
+    .details-img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
+    }
+
+    /* ضبط تفاصيل المنتج والنصوص */
+    .details-info {
+        width: 100% !important;
+    }
+
+    #product-detail-name {
+        font-size: 22px !important;
+        line-height: 1.3 !important;
+    }
+
+    /* ضبط الخيارات والأزرار لتملأ العرض */
+    .size-selection-box,
+    .add-to-cart-main-btn,
+    .product-trust-badge {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+}
+
+/* 🚀 إلغاء الفراغات وتمديد المحتوى بعرض الشاشة */
+html, body {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important; /* لمنع أي سكرول أفقي زئبق */
+}
+
+@media (max-width: 768px) {
+    /* تمديد الحاوية لتأخذ الشاشة كاملة بدون مسافات من الأطراف */
+    .container,
+    main.container,
+    .product-details-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        box-sizing: border-box !important;
+    }
+
+    /* إلغاء الـ Padding الداخلي من الهيدر */
+    header .navbar {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+
+    /* تكبير الصورة لتملأ عرض الموبايل تماماً */
+   /* 🖼️ تمديد الصورة لتملأ الإطار بالكامل بدون فراغات */
+.main-image-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important; /* إلغاء أي أبعاد غير متناسقة */
+    aspect-ratio: 3 / 4 !important; /* نسبة طولية مناسبة لصور الملابس */
+    background-color: transparent !important;
+}
+
+.details-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important; /* يضمن تغطية الصورة للإطار بالكامل وإلغاء الفراغات */
+    object-position: center !important; /* ضبط السنتر للتركيز على المنتج */
+}
+}
     </style>
 </head>
 <body>
@@ -214,8 +373,8 @@
         </div>
 
         <div class="details-info">
-            <h1 id="product-detail-name" style="font-size: 32px;">جاري تحميل المنتج... </h1>
-            <p id="product-detail-price" class="price" style="font-size: 26px;"></p>
+            <h1 id="product-detail-name" style="font-size: 28px;">جاري تحميل المنتج...</h1>
+            <p id="product-detail-price" class="price" style="font-size: 24px; font-weight: 700; color: #f472b6;"></p>
             
             <p id="product-detail-description" class="product-description-text"></p>
             
@@ -225,24 +384,31 @@
                     <label class="size-btn-label">
                         <input type="radio" name="product-size" value="Size 1" checked>
                         <span class="size-name">Size 1</span>
-                        <span class="size-weight">يلائم  الي 65 كجم</span>
+                        <span class="size-weight">يلائم إلى 65 كجم</span>
                     </label>
                     <label class="size-btn-label">
                         <input type="radio" name="product-size" value="Size 2">
                         <span class="size-name">Size 2</span>
-                        <span class="size-weight">يلائم  الي 85 كجم</span>
+                        <span class="size-weight">يلائم إلى 95 كجم</span>
                     </label>
                 </div>
             </div>
 
-            <button id="detail-add-btn" class="add-to-cart-btn" style="width: fit-content; padding: 14px 40px; font-size: 16px; border-radius: 10px;">
+            <button id="detail-add-btn" class="add-to-cart-btn add-to-cart-main-btn">
                 إضافة إلى سلة المشتريات 🛍️
             </button>
+
+            <!-- شارة سياسة الاسترجاع والمعاينة -->
+            <div class="product-trust-badge">
+                <span class="trust-icon">📦</span>
+                <span class="trust-text">معاينة عند الاستلام قبل الدفع!</span>
+                <a href="/return-policy.html" class="trust-link">سياسة الاسترجاع</a>
+            </div>
         </div>
     </main>
 
     <section class="container related-products-section">
-        <h2 class="section-title" style="margin-bottom: 30px;">منتجات أخرى قد تعجبكِ </h2>
+        <h2 class="section-title" style="margin-bottom: 25px; font-size: 22px;">منتجات أخرى قد تعجبكِ</h2>
         <div id="other-products-grid" class="products-grid"></div>
     </section>
 
@@ -281,7 +447,6 @@
             alert(`تمت إضافة "${product.name}" (مقاس: ${selectedSize}) إلى السلة بنجاح! 🎉`);
         }
 
-        // تشغيل السلايدر
         function setupGallery(images) {
             productImages = images;
             currentImageIndex = 0;
@@ -323,7 +488,7 @@
             setTimeout(() => {
                 mainImg.src = productImages[currentImageIndex];
                 mainImg.style.opacity = '1';
-            }, 150);
+            }, 120);
 
             const thumbs = document.querySelectorAll('.thumbnail-img');
             thumbs.forEach((t, idx) => {
@@ -352,7 +517,6 @@
                 document.getElementById('product-detail-price').textContent = `${product.price} ج.م`;
                 document.getElementById('product-detail-description').textContent = product.description || product.desc || 'خامة فاخرة ومصممة بعناية فائقة لتناسب إطلالتكِ اليومية والمناسبات بكل راحة وأناقة.';
 
-                // تجميع الصور (سواء صورة واحدة أو عدة صور)
                 let imgs = [];
                 if (product.images && Array.isArray(product.images) && product.images.length > 0) {
                     imgs = product.images;
@@ -401,7 +565,6 @@
 
                     const isOutOfStock = p.stock !== undefined && p.stock <= 0;
 
-                    // استخراج الصورة الأولى بكفاءة
                     let cardImg = '';
                     if (Array.isArray(p.images) && p.images.length > 0) {
                         cardImg = p.images[0];
