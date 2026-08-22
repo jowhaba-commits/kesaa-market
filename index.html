@@ -227,10 +227,8 @@ async function handleLogout() {
 
 }
 
-/* إخفاء نص الوصف داخل كروت المنتجات في الصفحة الرئيسية فقط */
-.product-card .product-description,
-.product-card p {
-    display: none;
+.product-card p:not([class*="price"]):not([class*="btn"]) {
+    display: none !important;
 }
 
 .policy-badge {
