@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://kisaa-project.vercel.app/sitemap.xml
