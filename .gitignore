@@ -1,0 +1,9 @@
+# الملفات السرية والمفاتيح
+service-account.json
+.env
+*.pem
+
+# مجلدات المكتبات والملفات المؤقتة
+node_modules/
+.DS_Store
+.vscode/
