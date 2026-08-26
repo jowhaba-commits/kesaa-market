@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // جلب المنتجات
     const productsGrid = document.querySelector('.products-grid');
     if (productsGrid) {
-        productsGrid.innerHTML = '<h3 style="grid-column: 1/-1; text-align: center; padding: 40px;">جاري تحميل أحدث العبايات و الطرح ... </h3>';
+        productsGrid.innerHTML = '<h3 style="grid-column: 1/-1; text-align: center; padding: 40px;">جاري تحميل أحدث المنتجات  ... </h3>';
 
         try {
             const { data: storedProducts, error } = await SupabaseClient
