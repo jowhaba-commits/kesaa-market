@@ -1,11 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+  
+  <!-- الصفحة الرئيسية - متجر كساء -->
   <url>
     <loc>https://kisaa-project.vercel.app/</loc>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- صفحة المنتجات -->
   <url>
-    <loc>https://kisaa-project.vercel.app/</loc>
-    <priority>0.8</priority>
+    <loc>https://kisaa-project.vercel.app/product.html</loc>
+    <lastmod>2026-08-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
+
+  <!-- صفحة تسجيل الدخول -->
+  <url>
+    <loc>https://kisaa-project.vercel.app/login.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <!-- صفحة الملف الشخصي -->
+  <url>
+    <loc>https://kisaa-project.vercel.app/profile.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
+
+  <!-- صفحة سياسة الاسترجاع -->
+  <url>
+    <loc>https://kisaa-project.vercel.app/return-policy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- صفحة شكرًا لكم -->
+  <url>
+    <loc>https://kisaa-project.vercel.app/thank-you.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.1</priority>
+  </url>
+
 </urlset>
