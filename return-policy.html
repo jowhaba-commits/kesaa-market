@@ -2,106 +2,106 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سياسة الاسترجاع والاستبدال | كساء</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>سياسة الاسترجاع والاستبدال | Kesaa Store</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
-        :root {
-            --bg-color: #f8f9fa;
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --primary-color: #0f172a;
-            --accent-color: #2563eb;
-            --border-color: #e2e8f0;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-        }
-
-        /* قراءة نظام الجهاز أو إضافة الكلاس */
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-color: #0f172a;
-                --card-bg: #1e293b;
-                --text-main: #f8fafc;
-                --text-muted: #94a3b8;
-                --primary-color: #38bdf8;
-                --accent-color: #60a5fa;
-                --border-color: #334155;
-                --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-            }
-        }
-
-        body.dark, body.dark-mode {
-            --bg-color: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --primary-color: #38bdf8;
-            --accent-color: #60a5fa;
-            --border-color: #334155;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
-        }
-
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
             font-family: 'Cairo', sans-serif;
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: #ffffff !important;
+            color: #1e293b;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 20px 16px;
         }
 
-        .container {
+        .policy-container {
             width: 100%;
-            max-width: 680px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
+            max-width: 520px;
+            background-color: #ffffff !important;
+            border: 1px solid #e2e8f0;
             border-radius: 20px;
-            padding: 40px 30px;
-            box-shadow: var(--shadow);
-            position: relative;
+            padding: 32px 24px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
         }
 
-        .header {
+        .header-section {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 28px;
         }
 
-        .header h1 {
-            font-size: 1.8rem;
+        /* تنسيق اللوجو */
+        .brand-logo {
+            max-width: 120px;
+            height: auto;
+            margin-bottom: 12px;
+            object-fit: contain;
+            display: inline-block;
+        }
+
+        .header-section h1 {
+            font-size: 1.45rem;
             font-weight: 800;
-            color: var(--primary-color);
+            color: #0f172a;
         }
 
         .policy-list {
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 16px;
-            margin-bottom: 30px;
+            gap: 14px;
+            margin-bottom: 28px;
         }
 
         .policy-item {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             gap: 12px;
-            font-size: 1.05rem;
-            line-height: 1.7;
-            color: var(--text-main);
+            padding: 12px 14px;
+            background-color: #f8fafc;
+            border: 1px solid #f1f5f9;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #334155;
         }
 
-        /* مؤشر الكتابة الحية */
+        .policy-item.warning {
+            border-right: 3.5px solid #ef4444;
+            background-color: #fef2f2;
+        }
+
+        .icon-circle {
+            width: 36px;
+            height: 36px;
+            background-color: #fdf2f8;
+            color: #f472b6;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+
+        .policy-item.warning .icon-circle {
+            background-color: #ffe4e6;
+            color: #ef4444;
+        }
+
         .typing-cursor {
-            border-left: 2px solid var(--accent-color);
+            border-left: 2px solid #f472b6;
             animation: blink 0.7s infinite;
         }
 
@@ -110,80 +110,129 @@
             50% { opacity: 0; }
         }
 
-        .bullet-icon {
-            font-size: 1.2rem;
-            flex-shrink: 0;
-            margin-top: 2px;
+        .brand-logo{
+            border-radius: 70px;
         }
 
-        .footer-note {
+        .guarantee-banner {
             text-align: center;
-            padding-top: 20px;
-            border-top: 1px dashed var(--border-color);
+            padding-top: 18px;
+            border-top: 1px dashed #e2e8f0;
+            color: #f472b6;
             font-weight: 700;
-            color: var(--accent-color);
-            font-size: 1.1rem;
+            font-size: 0.92rem;
             opacity: 0;
             transition: opacity 0.5s ease;
         }
 
+        .back-btn-wrapper {
+            text-align: center;
+            margin-top: 20px;
+        }
+
         .back-btn {
-            display: block;
-            width: fit-content;
-            margin: 25px auto 0;
+            display: inline-block;
             padding: 10px 24px;
-            background-color: var(--border-color);
-            color: var(--text-main);
+            background-color: transparent;
+            color: #0f172a;
+            border: 1.5px solid #e2e8f0;
             text-decoration: none;
             border-radius: 30px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: all 0.25s ease;
         }
 
         .back-btn:hover {
-            transform: translateY(-2px);
-            background-color: var(--accent-color);
+            background-color: #f472b6;
             color: #ffffff;
+            border-color: #f472b6;
+            box-shadow: 0 8px 18px rgba(244, 114, 182, 0.3);
+        }
+
+        .back-btn:active {
+            transform: scale(0.97);
+            box-shadow: 0 0 10px #f472b6, 0 0 25px #f472b6 !important;
         }
 
         @media (max-width: 480px) {
-            .container { padding: 25px 18px; }
-            .header h1 { font-size: 1.4rem; }
-            .policy-item { font-size: 0.95rem; }
+            .policy-container {
+                padding: 24px 16px;
+            }
+
+            .brand-logo {
+                max-width: 95px;
+            }
+
+            .header-section h1 {
+                font-size: 1.25rem;
+            }
+
+            .policy-item {
+                font-size: 0.88rem;
+                padding: 10px 12px;
+            }
+
+            .icon-circle {
+                width: 32px;
+                height: 32px;
+                font-size: 0.85rem;
+            }
+
+            .back-btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
+
+    <div class="policy-container">
+        <div class="header-section">
+            <!-- مسار اللوجو الخاص بمتجرك -->
+            <img src="/imges/PNG.Logo.JPG.jpeg" alt="Kesaa Store Logo" class="brand-logo">
             <h1>سياسة الاسترجاع والاستبدال 🤍</h1>
         </div>
+
         <ul class="policy-list">
-            <li class="policy-item"><span class="bullet-icon">🔹</span><span class="typewriter-text" data-text="حرصًا على راحتك، بنوفر لكِ إمكانية معاينة الأوردر عند الاستلام قبل الدفع."></span></li>
-            <li class="policy-item"><span class="bullet-icon">🔹</span><span class="typewriter-text" data-text="لو المنتج مناسبك، تستلمي الأوردر وتدفعي قيمته بالكامل."></span></li>
-            <li class="policy-item"><span class="bullet-icon">🔹</span><span class="typewriter-text" data-text="لو المنتج مش مناسبك أو مش عجبك، تقدري ترفضي الاستلام، وفي الحالة دي بتدفعي قيمة الشحن فقط."></span></li>
-            <li class="policy-item"><span class="bullet-icon">⚠️</span><span class="typewriter-text" data-text="بمجرد استلام الأوردر ودفع قيمته، لا يمكن إرجاع المنتج."></span></li>
-            <li class="policy-item"><span class="bullet-icon">🔹</span><span class="typewriter-text" data-text="برجاء التأكد من المقاس واللون والتفاصيل أثناء المعاينة قبل الاستلام."></span></li>
+            <li class="policy-item">
+                <div class="icon-circle"><i class="fa-solid fa-eye"></i></div>
+                <span class="typewriter-text" data-text="حرصًا على راحتك، بنوفر لكِ إمكانية معاينة الأوردر عند الاستلام قبل الدفع."></span>
+            </li>
+            <li class="policy-item">
+                <div class="icon-circle"><i class="fa-solid fa-bag-shopping"></i></div>
+                <span class="typewriter-text" data-text="لو المنتج مناسبك، تستلمي الأوردر وتدفعي قيمته بالكامل."></span>
+            </li>
+            <li class="policy-item">
+                <div class="icon-circle"><i class="fa-solid fa-truck"></i></div>
+                <span class="typewriter-text" data-text="لو المنتج مش مناسبك، تقدري ترفضي الاستلام، وفي الحالة دي بتدفعي قيمة الشحن فقط."></span>
+            </li>
+            <li class="policy-item warning">
+                <div class="icon-circle"><i class="fa-solid fa-circle-exclamation"></i></div>
+                <span class="typewriter-text" data-text="بمجرد استلام الأوردر ودفع قيمته، لا يمكن إرجاع أو استبدال المنتج."></span>
+            </li>
+            <li class="policy-item">
+                <div class="icon-circle"><i class="fa-solid fa-ruler"></i></div>
+                <span class="typewriter-text" data-text="برجاء التأكد من المقاس واللون والتفاصيل أثناء المعاينة قبل الاستلام."></span>
+            </li>
         </ul>
-        <div class="footer-note" id="footerNote">هدفنا إنك تستلمي المنتج وإنتِ مطمنة وراضية عنه 🤍</div>
-        <a href="index.html" class="back-btn">← العودة للمتجر</a>
+
+        <div class="guarantee-banner" id="footerNote">
+            هدفنا إنك تستلمي المنتج وإنتِ مطمنة وراضية عنه 🤍
+        </div>
+
+        <div class="back-btn-wrapper">
+            <a href="index.html" class="back-btn"> العودة للمتجر</a>
+        </div>
     </div>
 
     <script>
-        // 1. ميز المظهر الليلي أوتوماتيكياً
-        if (localStorage.getItem('theme') === 'dark' || localStorage.getItem('darkMode') === 'true') {
-            document.body.classList.add('dark');
-        }
-
-        // 2. تأثير الكتابة الحية الحقيقي (Typewriter)
         document.addEventListener("DOMContentLoaded", () => {
             const elements = document.querySelectorAll('.typewriter-text');
             let currentElementIndex = 0;
 
             function typeNextElement() {
                 if (currentElementIndex >= elements.length) {
-                    // ظهور الجملة الأخيرة بعد انتهاء الكتابة
                     document.getElementById('footerNote').style.opacity = '1';
                     return;
                 }
@@ -201,9 +250,9 @@
                         clearInterval(interval);
                         element.classList.remove('typing-cursor');
                         currentElementIndex++;
-                        setTimeout(typeNextElement, 300); // وقت التأخير بين كل سطر والتاني
+                        setTimeout(typeNextElement, 200);
                     }
-                }, 20); // سرعة كتابة الحروف
+                }, 18);
             }
 
             typeNextElement();
