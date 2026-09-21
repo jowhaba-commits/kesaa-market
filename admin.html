@@ -139,9 +139,9 @@
             color: white;
         }
 
-        /* ===================================================
-   📱 Media Queries قوية جداً للشاشات الصغيرة والموبايل
-   =================================================== */
+        /* =========
+    Media Queries  
+   ================= */
 
 /* للشاشات المتوسطة (التابلت 992px وأقل) */
 @media (max-width: 992px) {
@@ -237,11 +237,11 @@ body.dark-mode input:focus {
 </div>
 
 <script>
-    //  النص المشفر لباسوردك ( SHA-256 Hash )
-    // الكلمة الأصلية هي مثلاً: Kesaa2026
+    
+    
     const HASHED_PASSWORD_HASH = "15c2a4ddcf2d58a7dc372cca0c2ea9c2c3822d578360209cbf75e42b46ef5034"; 
 
-    // دالة لتشفير النص المدخل ومقارنته بالبصمة
+    
     async function hashText(text) {
         const encoder = new TextEncoder();
         const data = encoder.encode(text);
@@ -256,7 +256,7 @@ body.dark-mode input:focus {
         const loginBtn = document.getElementById('admin-login-btn');
         const errorMsg = document.getElementById('login-error');
 
-        // التاكد لو خالتك دخلت الباسورد قبل كدة
+        
         if (sessionStorage.getItem('is_admin_logged_in') === 'true') {
             loginOverlay.style.display = 'none';
         }
