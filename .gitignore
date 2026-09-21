@@ -1,4 +1,3 @@
-# الملفات السرية والمفاتيح
 service-account.json
 .env
 *.pem
